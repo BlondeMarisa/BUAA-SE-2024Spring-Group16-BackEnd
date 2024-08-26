@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mall.mapper.TUserMapper">
+
+  <resultMap id="BaseResultMap" type="com.powernode.mall.po.TUser">
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="salt" jdbcType="CHAR" property="salt" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="created_user" jdbcType="VARCHAR" property="createdUser" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_user" jdbcType="VARCHAR" property="modifiedUser" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.powernode.mall.po.TUser">
+    insert into t_user (uid, username, type, 
+      password, salt, phone, email, 
+      gender, avatar, is_delete, 
+      created_user, created_time, modified_user, 
+      modified_time)
+    values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{password,jdbcType=CHAR}, #{salt,jdbcType=CHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}, 
+      #{createdUser,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedUser,jdbcType=VARCHAR}, 
+      #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.powernode.mall.po.TUser">
+    update t_user
+    set username = #{username,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      salt = #{salt,jdbcType=CHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      modified_user = #{modifiedUser,jdbcType=VARCHAR},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select uid, username, type, password, salt, phone, email, gender, avatar, is_delete, 
+    created_user, created_time, modified_user, modified_time
+    from t_user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select uid, username, type, password, salt, phone, email, gender, avatar, is_delete,
+    created_user, created_time, modified_user, modified_time
+    from t_user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select uid, username, type, password, salt, phone, email, gender, avatar, is_delete, 
+    created_user, created_time, modified_user, modified_time
+    from t_user
+  </select>
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mall.mapper.TCommentImageMapper">
+  <resultMap id="BaseResultMap" type="com.powernode.mall.po.TCommentImage">
+    <id column="ciid" jdbcType="INTEGER" property="ciid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="image_src" jdbcType="VARCHAR" property="imageSrc" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_comment_image
+    where ciid = #{ciid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.powernode.mall.po.TCommentImage">
+    insert into t_comment_image (ciid, uid, cid, 
+      image_src)
+    values (#{ciid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, 
+      #{imageSrc,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.powernode.mall.po.TCommentImage">
+    update t_comment_image
+    set uid = #{uid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      image_src = #{imageSrc,jdbcType=VARCHAR}
+    where ciid = #{ciid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ciid, uid, cid, image_src
+    from t_comment_image
+    where ciid = #{ciid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ciid, uid, cid, image_src
+    from t_comment_image
+  </select>
+</mapper>

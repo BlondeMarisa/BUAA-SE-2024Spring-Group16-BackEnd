@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mall.mapper.TOrderMapper">
+  <resultMap id="BaseResultMap" type="com.powernode.mall.po.TOrder">
+    <id column="oid" jdbcType="INTEGER" property="oid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="created_user" jdbcType="VARCHAR" property="createdUser" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_user" jdbcType="VARCHAR" property="modifiedUser" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_order
+    where oid = #{oid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.powernode.mall.po.TOrder">
+    <selectKey keyProperty="oid" order="AFTER" resultType="java.lang.Integer">
+      select last_insert_id()
+    </selectKey>
+    insert into t_order (oid, uid, aid, 
+      total_price, status, order_time, 
+      pay_time, created_user, created_time, 
+      modified_user, modified_time, version, 
+      quantity)
+    values (#{oid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{createdUser,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{modifiedUser,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP}, #{version,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.powernode.mall.po.TOrder">
+    update t_order
+    set uid = #{uid,jdbcType=INTEGER},
+      aid = #{aid,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      modified_user = #{modifiedUser,jdbcType=VARCHAR},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER}
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select oid, uid, aid, total_price, status, order_time, pay_time, created_user, created_time, 
+    modified_user, modified_time, version, quantity
+    from t_order
+    where oid = #{oid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select oid, uid, aid, total_price, status, order_time, pay_time, created_user, created_time, 
+    modified_user, modified_time, version, quantity
+    from t_order
+  </select>
+</mapper>

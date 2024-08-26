@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mall.mapper.TShopMapper">
+
+  <resultMap id="BaseResultMap" type="com.powernode.mall.po.TShop">
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="salt" jdbcType="CHAR" property="salt" />
+    <result column="shopname" jdbcType="VARCHAR" property="shopname" />
+    <result column="fans_number" jdbcType="INTEGER" property="fansNumber" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="is_authenticated" jdbcType="INTEGER" property="isAuthenticated" />
+    <result column="created_user" jdbcType="VARCHAR" property="createdUser" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_user" jdbcType="VARCHAR" property="modifiedUser" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_shop
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.powernode.mall.po.TShop">
+    insert into t_shop (sid, username, password, 
+      salt, shopname, fans_number, 
+      phone, email, address, 
+      is_authenticated, created_user, created_time, 
+      modified_user, modified_time)
+    values (#{sid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, 
+      #{salt,jdbcType=CHAR}, #{shopname,jdbcType=VARCHAR}, #{fansNumber,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{isAuthenticated,jdbcType=INTEGER}, #{createdUser,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{modifiedUser,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.powernode.mall.po.TShop">
+    update t_shop
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      salt = #{salt,jdbcType=CHAR},
+      shopname = #{shopname,jdbcType=VARCHAR},
+      fans_number = #{fansNumber,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      is_authenticated = #{isAuthenticated,jdbcType=INTEGER},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      modified_user = #{modifiedUser,jdbcType=VARCHAR},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select sid, username, password, salt, shopname, fans_number, phone, email, address, 
+    is_authenticated, created_user, created_time, modified_user, modified_time
+    from t_shop
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByKeywords" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sid, username, password, salt, shopname, fans_number, phone, email, address,
+    is_authenticated, created_user, created_time, modified_user, modified_time
+    from t_shop
+    where shopname like concat('%',#{keywords,jdbcType=VARCHAR},'%')
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, username, password, salt, shopname, fans_number, phone, email, address, 
+    is_authenticated, created_user, created_time, modified_user, modified_time
+    from t_shop
+  </select>
+
+  <select id="getSaleCountBySid" parameterType="java.lang.Integer" resultType="integer">
+    select ifnull(sum(tp.sale_volume), 0)
+    from t_shop join mall.t_product tp on t_shop.sid = tp.sid
+    where t_shop.sid = #{sid,jdbcType=INTEGER}
+  </select>
+
+  <update id="incrementFansNumber" parameterType="java.lang.Integer">
+    UPDATE t_shop
+    SET fans_number = fans_number + 1
+    WHERE sid = #{shopId,jdbcType=INTEGER}
+  </update>
+
+  <update id="decrementFansNumber" parameterType="java.lang.Integer">
+    UPDATE t_shop
+    SET fans_number = fans_number - 1
+    WHERE sid = #{shopId}
+  </update>
+
+</mapper>
